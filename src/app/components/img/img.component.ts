@@ -18,8 +18,8 @@ export class ImgComponent implements OnInit, OnChanges {
   @Output() imgLoadedEvent = new EventEmitter<string>();
   
   imageDefault = './assets/images/default.png';
-  counter = 0;
-  counterFn: number | undefined;
+  // counter = 0;
+  // counterFn: number | undefined;
 
   constructor() {
     // Antes del renderizado
@@ -39,11 +39,11 @@ export class ImgComponent implements OnInit, OnChanges {
     // before render
     // Se pueden correr cosas asíncronas, fetch, promesas, etc.
     // Se corre una vez
-    console.log('ImgComponent ngOnInit', 'imgValue =>', this.img);
-    this.counterFn = window.setInterval(() => {
-      this.counter++;
-      console.log('Run Counter');
-    }, 1000);
+    // console.log('ImgComponent ngOnInit', 'imgValue =>', this.img);
+    // this.counterFn = window.setInterval(() => {
+    //   this.counter++;
+    //   console.log('Run Counter');
+    // }, 1000);
   }
 
   ngAfterViewInit(): void {
@@ -55,8 +55,8 @@ export class ImgComponent implements OnInit, OnChanges {
   /* A lifecycle hook that is called when the component is destroyed. */
   ngOnDestroy(): void {
     // delete
-    console.log('ImgComponent ngOnDestroy');
-    window.clearInterval(this.counterFn);
+    // console.log('ImgComponent ngOnDestroy');
+    // window.clearInterval(this.counterFn);
   }
 
   /**
