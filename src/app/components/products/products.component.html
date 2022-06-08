@@ -4,6 +4,15 @@
 <p>
   Total: $ {{total}}
 </p>
+<p>
+  Today: {{today | timeAgo}}
+</p>
+<p>
+  Other: {{date | timeAgo}}
+</p>
+<!-- <p>
+  {{'HoLA BrAnDoN' | uppercase}}
+</p> -->
 <div class="products--grid">
   <app-product
     [product]="product"

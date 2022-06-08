@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/product.model';
+import { ProductsService } from 'src/app/services/products.service';
+import { StoreService } from 'src/app/services/store.service';
 
 @Component({
   selector: 'app-products',
@@ -8,44 +10,32 @@ import { Product } from 'src/app/models/product.model';
 })
 export class ProductsComponent implements OnInit {
 
-  /* Creating an empty array of type Product. */
   myShoppingCart: Product[] = [];
+  products: Product[] = [];
   total: number = 0;
+  today = new Date();
+  date = new Date(2021, 6, 8);
 
-  /* Creating an array of objects of type Product. */
-  products: Product[] = [
-    {
-      id: '1',
-      name: 'Básica Blanca',
-      price: 100,
-      imageUrl: 'https://pineapplestores.com/wp-content/uploads/2020/07/01_CM0011_UNI_WORDPRESS-626x791.jpg',
-    },
-    {
-      id: '2',
-      name: 'Básica Roja',
-      price: 120,
-      imageUrl: 'https://pineapplestores.com/wp-content/uploads/2020/07/01_CM0017_BAS_WORDPRESS.jpg',
-    },
-    {
-      id: '3',
-      name: 'Básica Negra',
-      price: 150,
-      imageUrl: 'https://pineapplestores.com/wp-content/uploads/2020/07/01_CM0001_UNI_WORDPRESS.jpg',
-    }
-  ];
-
-  constructor() { }
-
-  ngOnInit(): void {
+  /* Injecting the StoreService and ProductsService into the component. */
+  constructor(private storeService: StoreService, private productsService: ProductsService) {
+    this.myShoppingCart = this.storeService.getShoppingCart();
   }
 
+  ngOnInit(): void {
+    /* Subscribing to the observable returned by the getAllProducts() method. */
+    this.productsService.getAllProducts().subscribe(
+      data => {
+        this.products = data;
+      }
+    );
+  }
 
   /**
    * When the user clicks the Add to Cart button, add the product to the shopping cart.
    * @param {Product} product - Product
    */
   onAddToShoppingCart(product: Product) {
-    this.myShoppingCart.push(product);
-    this.total = this.myShoppingCart.reduce((sum, item) => sum + item.price, 0);
+    this.storeService.addProduct(product);
+    this.total = this.storeService.getTotal();
   }
 }
