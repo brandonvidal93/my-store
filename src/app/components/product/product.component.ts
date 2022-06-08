@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { Product } from '../../models/product.model';
 
@@ -17,9 +17,19 @@ export class ProductComponent implements OnInit {
     imageUrl: ''
   };
 
+  /* Creating a new event emitter that will emit a product. */
+  @Output() addedProduct = new EventEmitter<Product>();
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  /**
+   * When the add to cart button is clicked, emit the product object to the parent component
+   */
+  onAddToCart() {
+    this.addedProduct.emit(this.product);
   }
 
 }
