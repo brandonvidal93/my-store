@@ -11,10 +11,9 @@ import { StoreService } from 'src/app/services/store.service';
 export class ProductsComponent implements OnInit {
 
   myShoppingCart: Product[] = [];
+  total = 0;
   products: Product[] = [];
-  total: number = 0;
-  today = new Date();
-  date = new Date(2021, 6, 8);
+  showProductDetail = false;
 
   /* Injecting the StoreService and ProductsService into the component. */
   constructor(private storeService: StoreService, private productsService: ProductsService) {
@@ -37,5 +36,20 @@ export class ProductsComponent implements OnInit {
   onAddToShoppingCart(product: Product) {
     this.storeService.addProduct(product);
     this.total = this.storeService.getTotal();
+  }
+
+  /**
+   * If the showProductDetail property is true, then set it to false. If the showProductDetail property is false,
+   * then set it to true
+   */
+  toggleProductDetail() {
+    this.showProductDetail = !this.showProductDetail;
+  }
+
+  onShowDetail(id: string) {
+    console.log(id);
+    this.productsService.getProduct(id).subscribe(data => {
+      console.log(data);
+    });
   }
 }
