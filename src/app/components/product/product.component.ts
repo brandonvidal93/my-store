@@ -14,9 +14,13 @@ export class ProductComponent implements OnInit {
     id: '',
     price: 0,
     title: '',
-    image: '',
+    images: [],
     description: '',
-    category: ''
+    category: {
+      id: 0,
+      name: '',
+      typeImg: ''
+    }
   };
 
   /* Creating a new event emitter that will emit a product. */
