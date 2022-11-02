@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { Product } from '../../models/product.model';
 
@@ -7,7 +7,7 @@ import { Product } from '../../models/product.model';
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.scss']
 })
-export class ProductComponent implements OnInit {
+export class ProductComponent {
 
   /* Setting the default value of the product property to an empty object. */
   @Input() product: Product = {
@@ -17,19 +17,16 @@ export class ProductComponent implements OnInit {
     images: [],
     description: '',
     category: {
-      id: 0,
-      name: '',
-      typeImg: ''
+      id: '',
+      name: ''
     }
   };
 
   /* Creating a new event emitter that will emit a product. */
   @Output() addedProduct = new EventEmitter<Product>();
+  @Output() showProduct = new EventEmitter<string>();
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
   /**
    * When the add to cart button is clicked, emit the product object to the parent component
@@ -38,4 +35,7 @@ export class ProductComponent implements OnInit {
     this.addedProduct.emit(this.product);
   }
 
+  onShowDetail() {
+    this.showProduct.emit(this.product.id);
+  }
 }
