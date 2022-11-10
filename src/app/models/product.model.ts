@@ -11,3 +11,9 @@ export interface Product {
   description: string;
   category: Category;
 }
+
+/* Creating a new interface that extends the Product interface, but omits the id and category
+properties. */
+export interface CreateProductDTO extends Omit<Product, 'id' | 'category'> {
+  categoryId: number;
+}
