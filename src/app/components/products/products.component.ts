@@ -85,7 +85,8 @@ export class ProductsComponent implements OnInit {
       categoryId: 1,
     }
 
-    this.productsService.create(product).subscribe(data => {
+    this.productsService.create(product)
+    .subscribe(data => {
       this.products.unshift(data);
     });
   }

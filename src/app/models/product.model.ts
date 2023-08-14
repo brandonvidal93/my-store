@@ -13,7 +13,10 @@ export interface Product {
 }
 
 /* Creating a new interface that extends the Product interface, but omits the id and category
-properties. */
+properties. 
+
+Concept Data Transfer Object (DTO): https://en.wikipedia.org/wiki/Data_transfer_object
+*/
 export interface CreateProductDTO extends Omit<Product, 'id' | 'category'> {
   categoryId: number;
 }
