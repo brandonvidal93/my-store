@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CreateProductDTO, Product } from '../models/product.model';
+import { CreateProductDTO, Product, UpdateProductDTO } from '../models/product.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class ProductsService {
    * It returns an observable of an array of products
    * @returns An observable
    */
-  getAllProducts() {
+  getAll() {
     return this.http.get<Product[]>(`${this.apiUrl}`);
   }
 
@@ -24,7 +24,7 @@ export class ProductsService {
    * @param {string} id - The id of the product you want to get.
    * @returns The product with the id that was passed in.
    */
-  getProduct(id: string) {
+  get(id: string) {
     return this.http.get<Product>(`${this.apiUrl}/${id}`);
   }
 
@@ -35,5 +35,9 @@ export class ProductsService {
    */
   create(dto: CreateProductDTO) {
     return this.http.post<Product>(this.apiUrl, dto);
+  }
+
+  update(id: string, dto: UpdateProductDTO) {
+    return this.http.put<Product>(`${this.apiUrl}/${id}`, dto);
   }
 }

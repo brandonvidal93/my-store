@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CreateProductDTO, Product } from 'src/app/models/product.model';
+import { CreateProductDTO, Product, UpdateProductDTO } from 'src/app/models/product.model';
 import { ProductsService } from 'src/app/services/products.service';
 import { StoreService } from 'src/app/services/store.service';
 
@@ -35,8 +35,8 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    /* Subscribing to the observable returned by the getAllProducts() method. */
-    this.productsService.getAllProducts()
+    /* Subscribing to the observable returned by the getAll() method. */
+    this.productsService.getAll()
     .subscribe(
       data => {
         this.products = data;
@@ -68,7 +68,7 @@ export class ProductsComponent implements OnInit {
    * product.
    */
   onShowDetail(id: string) {
-    this.productsService.getProduct(id)
+    this.productsService.get(id)
     .subscribe(data => {
       this.productChosen = data;
       this.toggleProductDetail();
@@ -91,4 +91,19 @@ export class ProductsComponent implements OnInit {
     });
   }
 
+  updateProduct() {
+    const changes: UpdateProductDTO = {
+      title: 'New Title Product',
+      price: 250,
+    };
+
+    const id = this.productChosen.id;
+
+    this.productsService.update(id, changes)
+    .subscribe(data => {
+      const productIndex = this.products.findIndex(item => item.id === id);
+      this.products[productIndex] = data;
+      this.productChosen = data;
+    });
+  }
 }
