@@ -61,8 +61,15 @@ export class ProductsComponent implements OnInit {
     this.showProductDetail = !this.showProductDetail;
   }
 
+  /**
+   * The function "onShowDetail" retrieves a product with a given ID from a service and assigns it to
+   * the "productChosen" variable, then toggles the product detail view.
+   * @param {string} id - The id parameter is a string that represents the unique identifier of a
+   * product.
+   */
   onShowDetail(id: string) {
-    this.productsService.getProduct(id).subscribe(data => {
+    this.productsService.getProduct(id)
+    .subscribe(data => {
       this.productChosen = data;
       this.toggleProductDetail();
     });
