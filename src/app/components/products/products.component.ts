@@ -27,13 +27,17 @@ export class ProductsComponent implements OnInit {
   };
 
   /* Injecting the StoreService and ProductsService into the component. */
-  constructor(private storeService: StoreService, private productsService: ProductsService) {
+  constructor(
+    private storeService: StoreService,
+    private productsService: ProductsService
+  ) {
     this.myShoppingCart = this.storeService.getShoppingCart();
   }
 
   ngOnInit(): void {
     /* Subscribing to the observable returned by the getAllProducts() method. */
-    this.productsService.getAllProducts().subscribe(
+    this.productsService.getAllProducts()
+    .subscribe(
       data => {
         this.products = data;
       }
