@@ -37,7 +37,27 @@ export class ProductsService {
     return this.http.post<Product>(this.apiUrl, dto);
   }
 
+  /**
+   * The function updates a product with the given ID using the provided data.
+   * @param {string} id - The `id` parameter is a string that represents the unique identifier of the
+   * product that needs to be updated. It is used to specify which product should be updated in the
+   * database.
+   * @param {UpdateProductDTO} dto - The `dto` parameter is an object of type `UpdateProductDTO` which
+   * contains the updated information for the product.
+   * @returns an HTTP PUT request to update a product with the specified ID using the provided data
+   * transfer object (DTO). The response from the server will be of type `Product`.
+   */
   update(id: string, dto: UpdateProductDTO) {
     return this.http.put<Product>(`${this.apiUrl}/${id}`, dto);
+  }
+
+  /**
+   * The delete function sends a DELETE request to the specified API endpoint with the given ID.
+   * @param {string} id - The `id` parameter is a string that represents the unique identifier of the
+   * product that needs to be deleted.
+   * @returns The `delete` method is returning an `Observable` of type `Product`.
+   */
+  delete(id: string) {
+    return this.http.delete<boolean>(`${this.apiUrl}/${id}`);
   }
 }
