@@ -25,6 +25,9 @@ export class ProductsComponent implements OnInit {
       name: ''
     }
   };
+  
+  imgAddProduct = './assets/images/add.png';
+  imgClose = './assets/images/close.png';
 
   /* Injecting the StoreService and ProductsService into the component. */
   constructor(

@@ -1,6 +1,34 @@
 .products--grid {
   display: flex;
   flex-direction: column;
+  align-items: stretch;
+  padding: 15px;
+  grid-gap: 15px;
+
+  .btn--grid {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(white, .8);
+    box-shadow: 0px 2px 5px rgb(black, .2);
+    border-radius: 5px;
+    border: 5px dashed rgba(172, 217, 178, 1);
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    padding: 10px;
+    
+    .btn-img-icon {
+      width: 50px;
+      height: 50px;
+      margin-top: 10px;
+    }
+  }
+
+  .btn--grid:hover {
+    background-color: rgb(gray, .2);
+  }
 }
 
 .product-detail {
@@ -9,14 +37,79 @@
   left: 50%;
   bottom: 0;
   right: 0;
+  box-shadow: 0px 2px 5px rgb(black, .2);
   background-color: white;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   transition: all ease-out .5s;
   transform: translateX(100%);
+  padding: 15px;
   &.active{
     transform: translateX(0);
+  }
+
+  .title {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .description {
+    font-size: .9em;
+    margin-bottom: 20px;
+  }
+
+  .btn-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50px;
+    background-color: rgb(white, .8);
+    border-radius: 0 0 0 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    padding: 10px;
+
+    .btn-img-icon {
+      width: 50px;
+      height: 50px;
+    }
+  }
+
+  .btn-primary {
+    width: 100%;
+    background-color: rgb(#ACD9B2, .8);
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .btn-primary:hover {
+    background-color: rgb(#ACD9B2, .9);
+  }
+
+  .btn-alert {
+    width: 100%;
+    background-color: rgb(#dc3545, .8);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .btn-alert:hover {
+    background-color: rgb(#dc3545, .9);
   }
 }
 
@@ -25,7 +118,6 @@
   .products--grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-gap: 15px;
   }
 }
 
@@ -34,6 +126,5 @@
   .products--grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    grid-gap: 15px;
   }
 }
