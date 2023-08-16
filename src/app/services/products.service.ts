@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CreateProductDTO, Product, UpdateProductDTO } from '../models/product.model';
 
@@ -15,8 +15,15 @@ export class ProductsService {
    * It returns an observable of an array of products
    * @returns An observable
    */
-  getAll() {
-    return this.http.get<Product[]>(`${this.apiUrl}`);
+  getAll(limit?: number, offset?: number) {
+    let params = new HttpParams();
+
+    if(limit !== undefined && offset !== undefined) {
+      params = params.set('limit', limit);
+      params = params.set('offset', offset);
+    }
+
+    return this.http.get<Product[]>(`${this.apiUrl}`, { params });
   }
 
   /**
@@ -26,6 +33,22 @@ export class ProductsService {
    */
   get(id: string) {
     return this.http.get<Product>(`${this.apiUrl}/${id}`);
+  }
+
+  /**
+   * The function `getByPage` retrieves a list of products from an API based on the specified page and
+   * limit.
+   * @param {number} page - The page parameter is used to specify the page number of the data you want
+   * to retrieve. It is typically used in pagination to navigate through different pages of data.
+   * @param {number} limit - The `limit` parameter specifies the maximum number of items to be returned
+   * per page.
+   * @returns an HTTP GET request to the specified API URL with the provided page and limit parameters.
+   * The response is expected to be an array of Product objects.
+   */
+  getByPage(limit: number, offset: number) {
+    return this.http.get<Product[]>(`${this.apiUrl}`, {
+      params: { limit, offset }
+    });
   }
 
   /**

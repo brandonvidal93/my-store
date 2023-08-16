@@ -25,6 +25,8 @@ export class ProductsComponent implements OnInit {
       name: ''
     }
   };
+  limit = 10;
+  offset = 0;
   
   imgAddProduct = './assets/images/add.png';
   imgClose = './assets/images/close.png';
@@ -38,11 +40,11 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    /* Subscribing to the observable returned by the getAll() method. */
-    this.productsService.getAll()
+    this.productsService.getAll(this.limit, this.offset)
     .subscribe(
       data => {
         this.products = data;
+        this.offset += this.limit;
       }
     );
   }
@@ -94,6 +96,10 @@ export class ProductsComponent implements OnInit {
     });
   }
 
+  /**
+   * The `updateProduct()` function updates a product's title and price using the `productsService` and
+   * updates the local `products` array and `productChosen` variable with the updated data.
+   */
   updateProduct() {
     const changes: UpdateProductDTO = {
       title: 'New Title Product',
@@ -110,6 +116,9 @@ export class ProductsComponent implements OnInit {
     });
   }
 
+  /**
+   * The `deleteProduct()` function deletes a product from the list of products and updates the view.
+   */
   deleteProduct() {
     const id = this.productChosen.id;
 
@@ -118,6 +127,18 @@ export class ProductsComponent implements OnInit {
       const productIndex = this.products.findIndex(item => item.id === id);
       this.products.splice(productIndex, 1);
       this.toggleProductDetail();
+    });
+  }
+
+  /**
+   * The `loadMore()` function retrieves additional products from the server and appends them to the
+   * existing list of products.
+   */
+  loadMore() {
+    this.productsService.getAll(this.limit, this.offset)
+    .subscribe(data => {
+      this.products = this.products.concat(data);
+      this.offset += this.limit;
     });
   }
 }
