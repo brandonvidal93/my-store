@@ -8,6 +8,7 @@ import { retry } from 'rxjs/operators';
 })
 export class ProductsService {
 
+  // private apiUrl = '/api/products'; // Este se relaciona con el proxy para que funcione en desarrollo
   private apiUrl = 'https://young-sands-07814.herokuapp.com/api/products';
 
   constructor(private http: HttpClient) { }
