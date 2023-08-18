@@ -14,6 +14,7 @@ export class ProductsComponent implements OnInit {
   total = 0;
   products: Product[] = [];
   showProductDetail = false;
+  isProductChosen = false;
   productChosen: Product = {
     id: '',
     price: 0,
@@ -27,6 +28,8 @@ export class ProductsComponent implements OnInit {
   };
   limit = 10;
   offset = 0;
+  statusDetail: 'loading' | 'success' | 'error' | 'init' = 'init';
+  messageResponse = '';
   
   imgAddProduct = './assets/images/add.png';
   imgClose = './assets/images/close.png';
@@ -73,10 +76,19 @@ export class ProductsComponent implements OnInit {
    * product.
    */
   onShowDetail(id: string) {
+    this.statusDetail = 'loading';
+
+    this.toggleProductDetail();
+    
     this.productsService.get(id)
     .subscribe(data => {
+      this.isProductChosen = true;
       this.productChosen = data;
-      this.toggleProductDetail();
+      this.statusDetail = 'success';
+    }, response => {
+      this.isProductChosen = false;
+      this.messageResponse = response;
+      this.statusDetail = 'error';
     });
   }
 

@@ -4,6 +4,10 @@
     <app-img class="btn-img-icon" [img]="imgAddProduct"></app-img>
   </button>
 
+  <button class="btn--grid" (click)="onShowDetail('121212')">
+    Show Detail
+  </button>
+
   <app-product
     [product]="product"
     *ngFor="let product of products"
@@ -18,10 +22,11 @@
 </div>
 
 <div class="product-detail" [class.active]="showProductDetail">
-  <div *ngIf="productChosen">
-    <button class="btn-close" (click)="toggleProductDetail()">
-      <app-img class="btn-img-icon" [img]="imgClose"></app-img>
-    </button>
+  <button class="btn-close" (click)="toggleProductDetail()">
+    <app-img class="btn-img-icon" [img]="imgClose"></app-img>
+  </button>
+
+  <div *ngIf="isProductChosen">
     <h1 class="title">{{ productChosen.title }}</h1>
     <swiper
       [slidesPerView]="1"
@@ -34,5 +39,9 @@
     <p class="description">{{ productChosen.description }}</p>
     <button class="btn-primary" (click)="updateProduct()">Edit</button>
     <button class="btn-alert" (click)="deleteProduct()">Delete</button>
+  </div>
+
+  <div *ngIf="!isProductChosen">
+    <h1 class="title">{{ messageResponse }}</h1>
   </div>
 </div>

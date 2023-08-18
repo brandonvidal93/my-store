@@ -1,9 +1,10 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams, HttpStatusCode } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { retry } from 'rxjs/operators';
+import { retry, catchError } from 'rxjs/operators';
 import { CreateProductDTO, Product, UpdateProductDTO } from '../models/product.model';
 
 import { environment } from 'src/environments/environment';
+import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -39,7 +40,21 @@ export class ProductsService {
    * @returns The product with the id that was passed in.
    */
   get(id: string) {
-    return this.http.get<Product>(`${this.apiUrl}/${id}`);
+    return this.http.get<Product>(`${this.apiUrl}/${id}`)
+    .pipe(
+      catchError((error: HttpErrorResponse) => {
+        if(error.status === HttpStatusCode.InternalServerError) {
+          return throwError('Something went wrong');
+        }
+        if(error.status === HttpStatusCode.NotFound) {
+          return throwError('Product not found');
+        }
+        if(error.status === HttpStatusCode.Unauthorized) {
+          return throwError('Unauthorized');
+        }
+        return throwError(error);
+      })
+    );
   }
 
   /**
