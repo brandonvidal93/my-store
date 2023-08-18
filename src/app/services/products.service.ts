@@ -1,15 +1,17 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CreateProductDTO, Product, UpdateProductDTO } from '../models/product.model';
 import { retry } from 'rxjs/operators';
+import { CreateProductDTO, Product, UpdateProductDTO } from '../models/product.model';
+
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsService {
 
-  // private apiUrl = '/api/products'; // Este se relaciona con el proxy para que funcione en desarrollo
-  private apiUrl = 'https://young-sands-07814.herokuapp.com/api/products';
+  // private apiUrl = `${environment.API_URL}/api/products`; // Este se relaciona con el proxy para que funcione en desarrollo
+  private apiUrl = `${environment.API_URL}/api/products`;
 
   constructor(private http: HttpClient) { }
 
