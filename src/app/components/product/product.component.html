@@ -7,6 +7,7 @@
     {{product.description}}
   </p>
   <h2 class="price">{{product.price | currency: 'COP'}}</h2>
+  <h3 class="price">{{product?.taxes | currency: 'COP'}}</h3>
   <button class="btn-secondary" (click)="onShowDetail()">See more</button>
   <button class="btn-primary" (click)="onAddToCart()">Add cart</button>
 </div>

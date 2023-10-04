@@ -10,6 +10,7 @@ export interface Product {
   images: string[];
   description: string;
   category: Category;
+  taxes?: number;
 }
 
 /* Creating a new interface that extends the Product interface, but omits the id and category
