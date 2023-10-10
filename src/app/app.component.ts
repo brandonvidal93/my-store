@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 
-import { AuthService } from './services/auth.service';
 import { UsersService } from './services/users.service';
 
 @Component({
@@ -15,7 +14,6 @@ export class AppComponent {
   token = '';
 
   constructor(
-    private authService: AuthService,
     private usersService: UsersService
   ) {
 
@@ -29,23 +27,7 @@ export class AppComponent {
     })
     .subscribe(data => {
       console.log(data);
-      
     });
-  }
-
-  login() {
-    this.authService.login('brandon@mail.com','12345')
-    .subscribe(data => {
-      console.log(data.access_token);
-      this.token = data.access_token;
-    });
-  }
-
-  getProfile() {
-    this.authService.profile(this.token)
-    .subscribe(data => {
-      console.log(data);
-    })
   }
 
   /**
