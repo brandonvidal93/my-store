@@ -12,6 +12,7 @@ export class AppComponent {
   imgParent = '';
   imgLoaded = '';
   showImg = true;
+  token = '';
 
   constructor(
     private authService: AuthService,
@@ -36,7 +37,15 @@ export class AppComponent {
     this.authService.login('brandon@mail.com','12345')
     .subscribe(data => {
       console.log(data.access_token);
+      this.token = data.access_token;
     });
+  }
+
+  getProfile() {
+    this.authService.profile(this.token)
+    .subscribe(data => {
+      console.log(data);
+    })
   }
 
   /**
