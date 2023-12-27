@@ -13,6 +13,7 @@ export class AppComponent {
   imgLoaded = '';
   showImg = true;
   token = '';
+  imgRta = '';
 
   constructor(
     private usersService: UsersService,
@@ -45,8 +46,24 @@ export class AppComponent {
   //   this.showImg = !this.showImg;
   // }
 
+  /**
+   * The function `downloadPdf()` downloads a PDF file from a specified URL using the `getFile()`
+   * method from the `filesService` and subscribes to the resulting observable.
+   */
   downloadPdf() {
     this.filesService.getFile('my.pdf', 'https://young-sands-07814.herokuapp.com/api/files/dummy.pdf', 'application/pdf')
     .subscribe()
+  }
+
+  onUpload(event: Event) {
+    const element = event.target as HTMLInputElement;
+    const file = element.files?.item(0);
+
+    if(file) {
+      this.filesService.uploadFile(file)
+      .subscribe(response => {
+        this.imgRta = response.location;
+      })
+    }
   }
 }

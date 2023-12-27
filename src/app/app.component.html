@@ -3,4 +3,7 @@
 
 <button (click)="downloadPdf()">Descargar PDF</button>
 
+<input type="file" (change)="onUpload($event)">
+<img *ngIf="imgRta" [src]="imgRta" alt="image upload">
+
 <app-products></app-products>
