@@ -14,7 +14,7 @@ import { checkTime } from '../interceptors/time.interceptor'
 export class ProductsService {
 
   // private apiUrl = `${environment.API_URL}/api/products`; // Este se relaciona con el proxy para que funcione en desarrollo
-  private apiUrl = `${environment.API_URL}/api/products`;
+  private apiUrl = `${environment.API_URL}/api`;
 
   constructor(private http: HttpClient) { }
 
@@ -30,7 +30,7 @@ export class ProductsService {
       params = params.set('offset', offset);
     }
 
-    return this.http.get<Product[]>(`${this.apiUrl}`, { params, context: checkTime() })
+    return this.http.get<Product[]>(`${this.apiUrl}/products`, { params, context: checkTime() })
     .pipe(
       retry(1),
       map(products => products.map(item => {
@@ -43,12 +43,36 @@ export class ProductsService {
   }
 
   /**
+   * The function `getByCategory` retrieves products by category with optional limit and offset
+   * parameters.
+   * @param {string} categoryId - The categoryId parameter is a string that represents the ID of the
+   * category for which you want to retrieve products.
+   * @param {number} [limit] - The limit parameter is an optional parameter that specifies the maximum
+   * number of products to retrieve from the API. If not provided, all products in the specified
+   * category will be returned.
+   * @param {number} [offset] - The offset parameter is used to specify the starting point of the data
+   * to be retrieved. It determines how many items should be skipped before starting to return the
+   * data.
+   * @returns an HTTP GET request to retrieve an array of products that belong to a specific category.
+   */
+  getByCategory(categoryId: string, limit?: number, offset?: number) {
+    let params = new HttpParams();
+
+    if(limit !== undefined && offset !== undefined) {
+      params = params.set('limit', limit);
+      params = params.set('offset', offset);
+    }
+
+    return this.http.get<Product[]>(`${this.apiUrl}/categories/${categoryId}/products`, { params })
+  }
+
+  /**
    * This function takes in an id as a parameter and returns a product from the database
    * @param {string} id - The id of the product you want to get.
    * @returns The product with the id that was passed in.
    */
   get(id: string) {
-    return this.http.get<Product>(`${this.apiUrl}/${id}`)
+    return this.http.get<Product>(`${this.apiUrl}/products/${id}`)
     .pipe(
       catchError((error: HttpErrorResponse) => {
         if(error.status === HttpStatusCode.InternalServerError) {
@@ -76,7 +100,7 @@ export class ProductsService {
    * The response is expected to be an array of Product objects.
    */
   getByPage(limit: number, offset: number) {
-    return this.http.get<Product[]>(`${this.apiUrl}`, {
+    return this.http.get<Product[]>(`${this.apiUrl}/products`, {
       params: { limit, offset }
     });
   }
@@ -87,7 +111,7 @@ export class ProductsService {
    * @returns The created product
    */
   create(dto: CreateProductDTO) {
-    return this.http.post<Product>(this.apiUrl, dto);
+    return this.http.post<Product>(`${this.apiUrl}/products`, dto);
   }
 
   /**
@@ -101,7 +125,7 @@ export class ProductsService {
    * transfer object (DTO). The response from the server will be of type `Product`.
    */
   update(id: string, dto: UpdateProductDTO) {
-    return this.http.put<Product>(`${this.apiUrl}/${id}`, dto);
+    return this.http.put<Product>(`${this.apiUrl}/products/${id}`, dto);
   }
 
   /**
@@ -111,6 +135,6 @@ export class ProductsService {
    * @returns The `delete` method is returning an `Observable` of type `Product`.
    */
   delete(id: string) {
-    return this.http.delete<boolean>(`${this.apiUrl}/${id}`);
+    return this.http.delete<boolean>(`${this.apiUrl}/products/${id}`);
   }
 }
