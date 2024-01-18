@@ -1,5 +1,7 @@
 <div class="product">
-  <app-img *ngIf="product.images.length > 0" [img]="product.images[0]"></app-img>
+  <a [routerLink]="['/product', product.id]">
+    <app-img *ngIf="product.images.length > 0" [img]="product.images[0]"></app-img>
+  </a>
   <h1 class="title">
     {{product.title}}
   </h1>
