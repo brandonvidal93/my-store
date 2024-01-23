@@ -34,19 +34,6 @@ export class AppComponent {
   }
 
   /**
-   * The function takes a string as an argument and sets the imgLoaded property to the value of the
-   * string
-   * @param {string} img - string - The image that was loaded.
-   */
-  // onImgLoaded(img: string) {
-  //   this.imgLoaded = img;
-  // }
-
-  // toggleImg() {
-  //   this.showImg = !this.showImg;
-  // }
-
-  /**
    * The function `downloadPdf()` downloads a PDF file from a specified URL using the `getFile()`
    * method from the `filesService` and subscribes to the resulting observable.
    */
