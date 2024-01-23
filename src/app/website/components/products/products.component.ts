@@ -51,15 +51,7 @@ export class ProductsComponent implements OnInit {
     this.myShoppingCart = this.storeService.getShoppingCart();
   }
 
-  ngOnInit(): void {
-    /* this.productsService.getAll(this.limit, this.offset)
-    .subscribe(
-      data => {
-        this.products = data;
-        this.offset += this.limit;
-      }
-    ); */
-  }
+  ngOnInit(): void {}
 
   /**
    * When the user clicks the Add to Cart button, add the product to the shopping cart.
