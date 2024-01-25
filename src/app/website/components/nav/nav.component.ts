@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Category } from 'src/app/models/category.model';
 import { User } from 'src/app/models/user.model';
 
@@ -21,7 +22,8 @@ export class NavComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private storeService: StoreService,
-    private categoriesService: CategoriesService
+    private categoriesService: CategoriesService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -42,6 +44,12 @@ export class NavComponent implements OnInit {
       this.profile = user;
       console.log(user);
     });
+  }
+
+  logout() {
+    this.authService.logout();
+    this.profile = null;
+    this.router.navigate(['/home']);
   }
 
   getAllCategories() {
