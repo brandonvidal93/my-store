@@ -28,9 +28,6 @@ export class AuthService {
 
   profile() {
     return this.http.get<User>(`${this.apiUrl}/profile`, {
-      // headers: {
-      //   Authorization: `Bearer ${token}`,
-      // }
     }); 
   }
 
